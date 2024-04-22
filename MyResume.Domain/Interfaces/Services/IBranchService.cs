@@ -6,6 +6,7 @@ namespace MyResume.Domain.Services.Repositories
     {
         Task<List<Branch>> GetBranches();
         Task<Branch> GetBranchById(int id);
-        Task CreateBranch(Branch branch);
+        Task<int> CreateBranch(Branch branch);
+        Task DeleteBranch(int id);
     }
 }

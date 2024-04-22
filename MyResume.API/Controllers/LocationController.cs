@@ -32,13 +32,13 @@ namespace MyResume.API.Controllers
             return Ok(cities);
         }
 
-        [HttpGet("city/by/id={cityId}")]
+        [HttpGet("city/byid={cityId}")]
         public async Task<ActionResult<CityDto>> GetCity(int cityId)
         {
             var city = await _locationService.GetCityById(cityId);
 
             if (city is null)
-                return BadRequest();
+                return NotFound();
 
             return Ok(city);
         }
@@ -78,15 +78,15 @@ namespace MyResume.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("country/by/id={countryId}")]
+        [HttpGet("country/byid={countryId}")]
         public async Task<ActionResult<CountryResponse>> GetContry(int countryId)
         {
             var country = await _locationService.GetCountryById(countryId);
 
-            var response = new CountryResponse(country.Id, country.Name);
+            if (country is null)
+                return NotFound();
 
-            if (response is null)
-                return BadRequest();
+            var response = new CountryResponse(country.Id, country.Name);
 
             return Ok(response);
         }

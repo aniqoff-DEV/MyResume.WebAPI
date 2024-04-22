@@ -6,6 +6,7 @@ namespace MyResume.Domain.Interfaces.Repositories
     {
         Task<List<Branch>> Get();
         Task<Branch> GetById(int id);
-        Task Create(Branch branch);
+        Task<int> Create(Branch branch);
+        Task Delete(int id);
     }
 }
