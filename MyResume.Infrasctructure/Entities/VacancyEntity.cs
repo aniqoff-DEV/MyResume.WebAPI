@@ -6,6 +6,6 @@ namespace MyResume.Infrasctructure.Entities
     {
         public Guid Id { get; set; }
         public Guid EmployerId { get; set; }
-        public IFormFile File { get; set; }
+        public byte[] File { get; set; }
     }
 }

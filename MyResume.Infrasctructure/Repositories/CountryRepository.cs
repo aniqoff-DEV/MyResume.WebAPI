@@ -1,38 +1,47 @@
 ﻿using Dapper;
 using MyResume.Domain.Interfaces.Repositories;
 using MyResume.Domain.Models;
+using MyResume.Infrasctructure.Entities;
 using Npgsql;
+using System.Linq;
 
 namespace MyResume.Infrasctructure.Repositories
 {
     public class CountryRepository : ICountryRepository
     {
-        private const string TABLE_NAME = "Countries";
         private NpgsqlConnection connection;
 
         public CountryRepository()
         {
-            connection = new NpgsqlConnection("Host=localhost:5432;" +
-          "Username=postgres;" +
-          "Password=@niqoff2612;" +
-          "Database=myresumedb");
+            connection = new NpgsqlConnection(NpgsqlConfig.CONNECTION_STRING);
             connection.Open();
         }
 
-        public Task CreateCountry(Country country)
+        public async Task<int> CreateCountry(Country country)
         {
-            throw new NotImplementedException();
+            var countryEntity = new CountryEntity
+            {
+                Id = country.Id,
+                Name = country.Name,
+            };
+
+            string sql = $"INSERT INTO {nameof(Country)} (name) VALUES (@Name) RETURNING id;";
+            var countryId = await connection.QueryAsync<int>(sql, countryEntity);
+
+            return countryId.FirstOrDefault();
         }
 
         public async Task<List<Country>> GetCountries()
         {
-            var countries = await connection.QueryAsync<Country>($"SELECT * FROM {TABLE_NAME}");
+            var countries = await connection.QueryAsync<Country>($"SELECT * FROM {nameof(Country)}");
             return countries.ToList();
         }
 
-        public Task<Country> GetCountryById(int countryId)
+        public async Task<Country> GetCountryById(int countryId)
         {
-            throw new NotImplementedException();
+            var country = await connection.QueryAsync<Country>($"SELECT * FROM {nameof(Country)} WHERE id = @Id", countryId);
+
+            return country.FirstOrDefault()!;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using MyResume.Domain.Interfaces.Repositories;
+﻿using MyResume.Domain.Dtos;
+using MyResume.Domain.Interfaces.Repositories;
 using MyResume.Domain.Models;
 using MyResume.Domain.Services.Repositories;
 
@@ -15,24 +16,28 @@ namespace MyResume.Application.Services
             _cityRepository = cityRepository;
         }
 
-        public Task CreateCity(City city)
+        public async Task<int> CreateCity(City city)
         {
-            throw new NotImplementedException();
+            var cityId = await _cityRepository.CreateCity(city);
+            return cityId;
         }
 
-        public Task CreateCountry(Country country)
+        public async Task<int> CreateCountry(Country country)
         {
-            throw new NotImplementedException();
+            var countryId = await _countryRepository.CreateCountry(country);
+            return countryId;
         }
 
-        public Task<List<City>> GetCities()
+        public async Task<List<CityDto>> GetCities(int countryId)
         {
-            throw new NotImplementedException();
+            var cities = await _cityRepository.GetCities(countryId);
+            return cities;
         }
 
-        public Task<City> GetCityById(int cityId)
+        public async Task<CityDto> GetCityById(int cityId)
         {
-            throw new NotImplementedException();
+            var city = await _cityRepository.GetCityById(cityId);
+            return city;
         }
 
         public async Task<List<Country>> GetCountries()
@@ -41,9 +46,10 @@ namespace MyResume.Application.Services
             return countries;
         }
 
-        public Task<Country> GetCountryById(int countryId)
+        public async Task<Country> GetCountryById(int countryId)
         {
-            throw new NotImplementedException();
+            var countries = await _countryRepository.GetCountryById(countryId);
+            return countries;
         }
     }
 }

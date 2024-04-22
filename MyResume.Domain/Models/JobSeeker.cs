@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using MyResume.Domain.ValueObjects;
 using System.Text.RegularExpressions;
 
 namespace MyResume.Domain.Models
@@ -37,7 +38,7 @@ namespace MyResume.Domain.Models
 
         public Guid AvatarId { get; }
         public int CityId { get; }
-        public int BranchId { get; }
+        public int BranchId { get; } // должность
 
         public void UpdateReputation(int star) 
         {

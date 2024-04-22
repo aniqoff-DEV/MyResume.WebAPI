@@ -1,4 +1,5 @@
 ﻿using MyResume.Domain.Models;
+using MyResume.Domain.ValueObjects;
 
 namespace MyResume.Domain.Interfaces.Repositories
 {

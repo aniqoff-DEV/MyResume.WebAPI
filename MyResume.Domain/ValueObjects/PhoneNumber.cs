@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using System.Text.RegularExpressions;
 
-namespace MyResume.Domain.Models
+namespace MyResume.Domain.ValueObjects
 {
     public class PhoneNumber : ValueObject
     {
@@ -12,7 +12,7 @@ namespace MyResume.Domain.Models
 
         public static Result<PhoneNumber> Create(string input)
         {
-            if(string.IsNullOrWhiteSpace(input) || Regex.IsMatch(input, phoneRegex) == false)
+            if (string.IsNullOrWhiteSpace(input) || Regex.IsMatch(input, phoneRegex) == false)
                 return Result.Failure<PhoneNumber>("inputted wrong format!");
 
             return new PhoneNumber(input);

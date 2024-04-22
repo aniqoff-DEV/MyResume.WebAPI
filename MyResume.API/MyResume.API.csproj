@@ -15,8 +15,4 @@
     <ProjectReference Include="..\MyResume.Infrasctructure\MyResume.Infrasctructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
-
 </Project>

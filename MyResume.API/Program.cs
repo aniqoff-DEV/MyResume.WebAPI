@@ -1,4 +1,3 @@
-
 using MyResume.Application.Services;
 using MyResume.Domain.Interfaces.Repositories;
 using MyResume.Domain.Services.Repositories;
@@ -11,7 +10,6 @@ namespace MyResume.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            string connectionString = builder.Configuration.GetConnectionString("MyResumeDB")!;
             // Add services to the container.
 
             builder.Services.AddControllers();

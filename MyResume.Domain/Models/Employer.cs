@@ -1,4 +1,5 @@
 ﻿using CSharpFunctionalExtensions;
+using MyResume.Domain.ValueObjects;
 using System.Text.RegularExpressions;
 
 namespace MyResume.Domain.Models

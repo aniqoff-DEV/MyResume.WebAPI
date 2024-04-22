@@ -1,7 +1,7 @@
 ﻿using CSharpFunctionalExtensions;
 using System.Text.RegularExpressions;
 
-namespace MyResume.Domain.Models
+namespace MyResume.Domain.ValueObjects
 {
     public class Password : ValueObject
     {
