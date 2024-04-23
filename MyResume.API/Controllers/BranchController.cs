@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MyResume.API.Contracts.Requests;
 using MyResume.API.Contracts.Responses;
-using MyResume.Application.Services;
 using MyResume.Domain.Models;
 using MyResume.Domain.Services.Repositories;
 
@@ -19,7 +18,7 @@ namespace MyResume.API.Controllers
             _service = service;
         }
 
-        [HttpGet("branch/all")]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<BranchResponse>>> GetBranches()
         {
             var branches = await _service
@@ -33,7 +32,7 @@ namespace MyResume.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet("branch/byid={branchId}")]
+        [HttpGet("byid={branchId}")]
         public async Task<ActionResult<BranchResponse>> GetContry(int branchId)
         {
             var branch = await _service.GetBranchById(branchId);
@@ -45,7 +44,7 @@ namespace MyResume.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("branch/insert")]
+        [HttpPost("insert")]
         public async Task<ActionResult<BranchResponse>> InsertContry([FromBody] BranchRequest branchRequest)
         {
             var newBranch = Branch.Create(0, branchRequest.Name);
@@ -61,7 +60,7 @@ namespace MyResume.API.Controllers
             return Created(Request.GetDisplayUrl(), new BranchResponse(branchId, branchRequest.Name));
         }
 
-        [HttpDelete("branch/delete/byid={branchId}")]
+        [HttpDelete("delete/byid={branchId}")]
         public async Task<ActionResult> Delete(int branchId)
         {          
             await _service.DeleteBranch(branchId);
