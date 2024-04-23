@@ -39,9 +39,9 @@ namespace MyResume.Infrasctructure.Repositories
 
         public async Task<Country> GetCountryById(int countryId)
         {
-            var country = await connection.QueryAsync<Country>($"SELECT * FROM {nameof(Country)} WHERE id = @Id", countryId);
+            var country = await connection.QuerySingleAsync<Country>($"SELECT * FROM {nameof(Country)} WHERE id = @Id", countryId);
 
-            return country.FirstOrDefault()!;
+            return country;
         }
     }
 }

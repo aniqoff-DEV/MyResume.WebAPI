@@ -46,9 +46,9 @@ namespace MyResume.Infrasctructure.Repositories
 
         public async Task<Branch> GetById(int id)
         {
-            var branch = await connection.QueryAsync<Branch>($"SELECT * FROM {nameof(Branch)} WHERE id = @Id", id);
+            var branch = await connection.QuerySingleAsync<Branch>($"SELECT * FROM {nameof(Branch)} WHERE id = @Id", id);
 
-            return branch.FirstOrDefault()!;
+            return branch;
         }
     }
 }

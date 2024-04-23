@@ -44,12 +44,12 @@ namespace MyResume.Infrasctructure.Repositories
 
         public async Task<CityDto> GetCityById(int cityId)
         {
-            var city = await connection.QueryAsync<CityDto>($"SELECT ci.id, ct.name CountryName, ci.name " +
+            var city = await connection.QuerySingleAsync<CityDto>($"SELECT ci.id, ct.name CountryName, ci.name " +
                 $"FROM {nameof(City)} ci " +
                 $"INNER JOIN {nameof(Country)} ct ON ct.id = ci.country_id WHERE ci.id = @ci.Id;"
                 , cityId);
 
-            return city.FirstOrDefault()!;
+            return city;
         }
     }
 }
