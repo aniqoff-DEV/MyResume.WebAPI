@@ -62,9 +62,16 @@ namespace MyResume.API.Controllers
 
         [HttpDelete("delete/byid={branchId}")]
         public async Task<ActionResult> Delete(int branchId)
-        {          
-            await _service.DeleteBranch(branchId);
-            return StatusCode(StatusCodes.Status204NoContent);
+        {
+            try
+            {
+                await _service.DeleteBranch(branchId);
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }            
         }
     }
 }
