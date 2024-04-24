@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using MyResume.API.Contracts.Requests;
 using MyResume.API.Contracts.Responses;
+using MyResume.Domain.Interfaces.Services;
 using MyResume.Domain.Models;
-using MyResume.Domain.Services.Repositories;
 
 namespace MyResume.API.Controllers
 {

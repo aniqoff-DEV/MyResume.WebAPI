@@ -1,7 +1,7 @@
 ﻿using MyResume.Domain.Dtos;
 using MyResume.Domain.Interfaces.Repositories;
+using MyResume.Domain.Interfaces.Services;
 using MyResume.Domain.Models;
-using MyResume.Domain.Services.Repositories;
 
 namespace MyResume.Application.Services
 {

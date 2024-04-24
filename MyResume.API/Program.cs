@@ -1,6 +1,6 @@
 using MyResume.Application.Services;
 using MyResume.Domain.Interfaces.Repositories;
-using MyResume.Domain.Services.Repositories;
+using MyResume.Domain.Interfaces.Services;
 using MyResume.Infrasctructure.Repositories;
 
 namespace MyResume.API

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using MyResume.Domain.Models;
 
-namespace MyResume.Domain.Services.Repositories
+namespace MyResume.Domain.Interfaces.Services
 {
     public interface IImageService
     {

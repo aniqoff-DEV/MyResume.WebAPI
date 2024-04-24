@@ -1,7 +1,7 @@
 ﻿using MyResume.Domain.Models;
 using MyResume.Domain.ValueObjects;
 
-namespace MyResume.Domain.Services.Repositories
+namespace MyResume.Domain.Interfaces.Services
 {
     public interface IEmployerService
     {
