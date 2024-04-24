@@ -3,11 +3,11 @@ using MyResume.Domain.Models;
 
 namespace MyResume.Domain.Interfaces.Repositories
 {
-    public interface IImageService
+    public interface IImageRepository
     {
-        Task<Avatar> GetById(Guid id);
-        Task Create(Avatar avatar);
-        Task Delete(Guid id);
-        Task Update(Guid id, IFormFile imageFile);
+        Task<Avatar> GetByIdAvatar(Guid id);
+        Task<Guid> CreateAvatar(Avatar avatar);
+        Task DeleteAvatar(Guid id);
+        Task UpdateAvatar(Guid id, IFormFile imageFile);
     }
 }

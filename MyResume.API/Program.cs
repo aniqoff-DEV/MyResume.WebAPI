@@ -21,6 +21,9 @@ namespace MyResume.API
             builder.Services.AddScoped<IBranchRepository, BranchRepository>();
             builder.Services.AddScoped<IBranchService, BranchService>();
 
+            builder.Services.AddScoped<IImageRepository, ImageRepository>();
+            builder.Services.AddScoped<IImageService, ImageService>();
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
