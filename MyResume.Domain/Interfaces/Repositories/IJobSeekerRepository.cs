@@ -9,7 +9,9 @@ namespace MyResume.Domain.Interfaces.Repositories
         Task Delete(Guid id);
         Task<List<JobSeeker>> GetRawJobSeekers();
         Task<JobSeeker> GetByIdRawJobSeeker(Guid id);
-        Task<InfoOnCardJobSeekerDto> GetInfoOnCard(Guid jobSeekerId);
+        Task<InfoOnCardJobSeekerDto> GetInfoOnCardJobSeekerById(Guid jobSeekerId);
+        Task<List<InfoOnCardJobSeekerDto>> GetInfoOnCardJobSeekerOnList();
+
         Task UpdateInfo(Guid id,
                         string fullName,
                         string? description,

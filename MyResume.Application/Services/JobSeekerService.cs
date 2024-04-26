@@ -30,10 +30,16 @@ namespace MyResume.Application.Services
             return;
         }
 
-        public async Task<InfoOnCardJobSeekerDto> GetInfoOnCard(Guid jobSeekerId)
+        public async Task<InfoOnCardJobSeekerDto> GetInfoOnCardById(Guid jobSeekerId)
         {
             var jobSeeker = await _mediator.Send(new GetInfoOnCardJobSeekerByIdQuery(jobSeekerId));
             return jobSeeker;
+        }
+
+        public async Task<List<InfoOnCardJobSeekerDto>> GetInfoOnCardOnList()
+        {
+            var jobSeekers = await _mediator.Send(new GetInfoOnCardJobSeekerOnListQuery());
+            return jobSeekers;
         }
 
         public async Task<JobSeeker> GetJobSeekerById(Guid id)

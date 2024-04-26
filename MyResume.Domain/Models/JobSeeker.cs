@@ -9,7 +9,7 @@ namespace MyResume.Domain.Models
         public const int MAX_LENGHT_FULLNAME = 70;
         public const int MAX_LENGHT_DESCRIPTION = 250;
 
-        private const string nameRegex = @"^[^<>.!@#%/]+$";
+        private const string nameRegex = @"^[^<>.!@#%/]$";
         private const string nameRegexWithoutNumbers = @"[0-9]";
 
         private JobSeeker(Guid id, string fullName, string description, Email email,
@@ -32,7 +32,7 @@ namespace MyResume.Domain.Models
         public string Description { get; } = string.Empty;
         public Email Email { get; }
         public Password Password { get; }
-        public PhoneNumber? PhoneNumber { get; }
+        public PhoneNumber PhoneNumber { get; }
         public float Reputation { get; private set; } = 0;
         public int CountFeedBack { get; private set; } = 0;
 
@@ -62,6 +62,8 @@ namespace MyResume.Domain.Models
             if (fullName.Length > MAX_LENGHT_FULLNAME)
                 return Result.Failure<JobSeeker>("Too many characters of name!");
 
+            var r1 = Regex.IsMatch(fullName, nameRegex);
+            var r2 = Regex.IsMatch(fullName, nameRegexWithoutNumbers);
             if (Regex.IsMatch(fullName,nameRegex) || Regex.IsMatch(fullName, nameRegexWithoutNumbers))
                 return Result.Failure<JobSeeker>("The name must not contain special characters and/or numbers!");
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using MyResume.API.Contracts.Requests;
 using MyResume.Domain.Dtos;
 using MyResume.Domain.Interfaces.Services;
@@ -20,14 +21,25 @@ namespace MyResume.API.Controllers
         }
 
         [HttpGet("smallinfo/id={jobSeekerId}")]
-        public async Task<ActionResult<InfoOnCardJobSeekerDto>> GetInfoOnCard(Guid jobSeekerId)
+        public async Task<ActionResult<InfoOnCardJobSeekerDto>> GetInfoOnCardById(Guid jobSeekerId)
         {
-            var jobSeeker = await _jobSeekerService.GetInfoOnCard(jobSeekerId);
+            var jobSeeker = await _jobSeekerService.GetInfoOnCardById(jobSeekerId);
 
             if(jobSeeker is null) 
                 return NotFound();
 
             return Ok(jobSeeker);
+        }
+
+        [HttpGet("smallinfo/all")]
+        public async Task<ActionResult<List<InfoOnCardJobSeekerDto>>> GetInfoOnCardOnList()
+        {
+            var jobSeekers = await _jobSeekerService.GetInfoOnCardOnList();
+
+            if (jobSeekers.IsNullOrEmpty())
+                return NotFound();
+
+            return Ok(jobSeekers);
         }
 
         [HttpPost("create/fulldata")]
@@ -86,13 +98,17 @@ namespace MyResume.API.Controllers
                 request.Description,
                 email.Value,
         password.Value,
-        null,
+        PhoneNumber.Create(null).Value,
         null,
         null,
         null,
         null
                 );
             #endregion
+
+            if (newJobSeeker.IsFailure)
+                return BadRequest(newJobSeeker.Error);
+
             Guid newJobSeekerId = await _jobSeekerService.CreateJobSeeker(newJobSeeker.Value);
             return Created(Request.GetDisplayUrl(), newJobSeekerId);
         }

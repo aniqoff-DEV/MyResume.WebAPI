@@ -13,7 +13,7 @@ namespace MyResume.Application.CQRS.JobSeeker.Handlers
 
         public async Task<InfoOnCardJobSeekerDto> Handle(GetInfoOnCardJobSeekerByIdQuery request, CancellationToken cancellationToken)
         {
-            var jobSeeker = await _repository.GetInfoOnCard(request.Id);
+            var jobSeeker = await _repository.GetInfoOnCardJobSeekerById(request.Id);
 
             //if (note is null)
             //    throw new NoteNotFoundException();

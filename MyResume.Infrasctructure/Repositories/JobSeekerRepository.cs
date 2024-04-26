@@ -27,7 +27,7 @@ namespace MyResume.Infrasctructure.Repositories
                 Description = jobSeeker.Description,
                 Email = jobSeeker.Email.Value,
                 Password = jobSeeker.Password.Value,
-                PhoneNumber = jobSeeker.PhoneNumber!.Number,
+                PhoneNumber = jobSeeker.PhoneNumber.Number,
                 AvatarId = jobSeeker.AvatarId,
                 BranchId = jobSeeker.BranchId,
                 CityId =  jobSeeker.CityId,
@@ -38,7 +38,7 @@ namespace MyResume.Infrasctructure.Repositories
                 $" (id, full_name, description, email, password, phone_number," +
                 $" count_feedback, reputation, avatar_id, city_id, branch_id, resume_id)" +
                 $" VALUES (@Id, @FullName, @Description, @Email, @Password, @PhoneNumber," +
-                $" @AvatarId, @CityId, @BranchId, @ResumeId)" +
+                $" @CountFeedBack, @Reputation, @AvatarId, @CityId, @BranchId, @ResumeId)" +
                 $" RETURNING id;";
 
             var newJobSeekerId = await connection.QuerySingleAsync<Guid>(sql, newJobSeeker);
@@ -56,16 +56,27 @@ namespace MyResume.Infrasctructure.Repositories
             return;
         }
 
-        public async Task<InfoOnCardJobSeekerDto> GetInfoOnCard(Guid jobSeekerId)
+        public async Task<InfoOnCardJobSeekerDto> GetInfoOnCardJobSeekerById(Guid jobSeekerId)
         {
             string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, b.name BranchName, c.name CityName " +
                 "FROM job_seeker js " +
-                "INNER JOIN branch b ON b.id = js.branch_id " +
-                "INNER JOIN city c ON c.id = js.city_id " +
+                "LEFT JOIN branch b ON b.id = js.branch_id " +
+                "LEFT JOIN city c ON c.id = js.city_id " +
                 $"WHERE js.id = '{jobSeekerId}';";
 
             var jobSeeker = await connection.QuerySingleAsync<InfoOnCardJobSeekerDto>(sql);
             return jobSeeker;
+        }
+
+        public async Task<List<InfoOnCardJobSeekerDto>> GetInfoOnCardJobSeekerOnList()
+        {
+            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, b.name BranchName, c.name CityName " +
+                "FROM job_seeker js " +
+                "LEFT JOIN branch b ON b.id = js.branch_id " +
+                "LEFT JOIN city c ON c.id = js.city_id;";
+
+            var jobSeeker = await connection.QueryAsync<InfoOnCardJobSeekerDto>(sql);
+            return jobSeeker.ToList();
         }
 
         public async Task<List<JobSeeker>> GetRawJobSeekers()
