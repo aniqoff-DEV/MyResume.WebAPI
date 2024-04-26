@@ -45,7 +45,7 @@ namespace MyResume.Infrasctructure.Repositories
         {
             var city = await connection.QuerySingleAsync<CityDto>($"SELECT ci.id, ct.name CountryName, ci.name " +
                 $"FROM {nameof(City)} ci " +
-                $"INNER JOIN {nameof(Country)} ct ON ct.id = ci.country_id WHERE ci.id = @ci.Id;"
+                $"INNER JOIN {nameof(Country)} ct ON ct.id = ci.country_id WHERE ci.id = {cityId};"
                 , cityId);
 
             return city;
