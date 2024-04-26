@@ -7,5 +7,6 @@ namespace MyResume.Domain.Interfaces.Repositories
         Task<List<Country>> GetCountries();
         Task<Country> GetCountryById(int countryId);
         Task<int> CreateCountry(Country country);
+        Task DeleteCountry(int countryId);
     }
 }

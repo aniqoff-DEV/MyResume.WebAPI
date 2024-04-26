@@ -28,6 +28,12 @@ namespace MyResume.Application.Services
             return countryId;
         }
 
+        public async Task DeleteCountry(int countryId)
+        {
+            await _countryRepository.DeleteCountry(countryId);
+            return;
+        }
+
         public async Task<List<CityDto>> GetCities(int countryId)
         {
             var cities = await _cityRepository.GetCities(countryId);

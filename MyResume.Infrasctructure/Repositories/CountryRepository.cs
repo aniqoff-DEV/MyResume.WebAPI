@@ -3,7 +3,6 @@ using MyResume.Domain.Interfaces.Repositories;
 using MyResume.Domain.Models;
 using MyResume.Infrasctructure.Entities;
 using Npgsql;
-using System.Linq;
 
 namespace MyResume.Infrasctructure.Repositories
 {
@@ -31,6 +30,16 @@ namespace MyResume.Infrasctructure.Repositories
             return countryId.FirstOrDefault();
         }
 
+        public async Task DeleteCountry(int countryId)
+        {
+            string sql = $"BEGIN; DELETE FROM city WHERE country_id IN (SELECT id FROM country WHERE id = {countryId}); " +
+                $"DELETE FROM country WHERE id = {countryId}; COMMIT;";
+
+            await connection.ExecuteAsync(sql);
+
+            return;
+        }
+
         public async Task<List<Country>> GetCountries()
         {
             var countries = await connection.QueryAsync<Country>($"SELECT * FROM {nameof(Country)}");
@@ -39,7 +48,7 @@ namespace MyResume.Infrasctructure.Repositories
 
         public async Task<Country> GetCountryById(int countryId)
         {
-            var country = await connection.QuerySingleAsync<Country>($"SELECT * FROM {nameof(Country)} WHERE id = @Id", countryId);
+            var country = await connection.QuerySingleAsync<Country>($"SELECT * FROM {nameof(Country)} WHERE id = {countryId}");
 
             return country;
         }

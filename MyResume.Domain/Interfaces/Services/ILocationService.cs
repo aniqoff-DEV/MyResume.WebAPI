@@ -11,5 +11,6 @@ namespace MyResume.Domain.Interfaces.Services
         Task<CityDto> GetCityById(int cityId);
         Task<int> CreateCity(City city);
         Task<int> CreateCountry(Country country);
+        Task DeleteCountry(int countryId);
     }
 }

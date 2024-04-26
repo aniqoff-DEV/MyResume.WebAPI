@@ -26,7 +26,7 @@ namespace MyResume.Infrasctructure.Repositories
                 Name = city.Name,
             };
 
-            string sql = $"INSERT INTO {nameof(City)} (name, country_Id) VALUES (@Name, @Country_Id) RETURNING id;";
+            string sql = $"INSERT INTO {nameof(City)} (name, country_Id) VALUES (@Name, @CountryId) RETURNING id;";
             var cityId = await connection.QueryAsync<int>(sql, cityEntity);
 
             return cityId.FirstOrDefault();
@@ -36,8 +36,7 @@ namespace MyResume.Infrasctructure.Repositories
         {
             var cities = await connection.QueryAsync<CityDto>($"SELECT ci.id, ct.name CountryName, ci.name " +
                 $"FROM {nameof(City)} ci " +
-                $"INNER JOIN {nameof(Country)} ct ON ct.id = ci.country_id WHERE ct.id = @ct.Id;"
-                , countryId);
+                $"INNER JOIN {nameof(Country)} ct ON ct.id = ci.country_id WHERE ct.id = {countryId};");
 
             return cities.ToList();
         }

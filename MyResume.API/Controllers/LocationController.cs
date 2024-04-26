@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using MyResume.API.Contracts.Requests;
 using MyResume.API.Contracts.Responses;
 using MyResume.Domain.Dtos;
@@ -20,7 +21,7 @@ namespace MyResume.API.Controllers
         }
 
         #region City
-        [HttpGet("city/allbycountry/id={countryId}")]
+        [HttpGet("city/all/bycountry/id={countryId}")]
         public async Task<ActionResult<IEnumerable<CityDto>>> GetCities(int countryId)
         {
             var cities = await _locationService
@@ -32,7 +33,7 @@ namespace MyResume.API.Controllers
             return Ok(cities);
         }
 
-        [HttpGet("city/byid={cityId}")]
+        [HttpGet("city/id={cityId}")]
         public async Task<ActionResult<CityDto>> GetCity(int cityId)
         {
             var city = await _locationService.GetCityById(cityId);
@@ -72,13 +73,13 @@ namespace MyResume.API.Controllers
             var response = countries.Select( c =>
                 new CountryResponse(c.Id,c.Name));
 
-            if (response is null)
-                return BadRequest();
+            if (response.IsNullOrEmpty())
+                return NotFound();
 
             return Ok(response);
         }
 
-        [HttpGet("country/byid={countryId}")]
+        [HttpGet("country/id={countryId}")]
         public async Task<ActionResult<CountryResponse>> GetContry(int countryId)
         {
             var country = await _locationService.GetCountryById(countryId);
@@ -105,6 +106,20 @@ namespace MyResume.API.Controllers
                 return BadRequest();
             
             return Created(Request.GetDisplayUrl(), new CountryResponse(countryId,countryRequest.Name));
+        }
+
+        [HttpDelete("country/delete/id={countryId}")]
+        public async Task<ActionResult> DeleteCountry(int countryId)
+        {
+            try
+            {
+                await _locationService.DeleteCountry(countryId);
+                return StatusCode(StatusCodes.Status204NoContent);
+            }
+            catch (Exception)
+            {
+                return NotFound();
+            }
         }
         #endregion
     }
