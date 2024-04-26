@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace MyResume.Infrasctructure.Entities
+﻿namespace MyResume.Infrasctructure.Entities
 {
     public class ResumeEntity
     {

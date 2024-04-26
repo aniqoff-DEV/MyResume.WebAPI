@@ -1,6 +1,4 @@
-﻿using MyResume.Domain.Models;
-
-namespace MyResume.Infrasctructure.Entities
+﻿namespace MyResume.Infrasctructure.Entities
 {
     public class JobSeekerEntity
     {

@@ -9,11 +9,13 @@ namespace MyResume.Domain.Models
         public const int MAX_FILE_SIZE = 2 * 1024 * 1024; // max file size of 2 MB
         public static readonly string[] ALLOWED_EXTENSIONS = [".txt", ".md"];
 
-        private Vacancy(Guid id, Guid employerId, IFormFile file,
+        private Vacancy(Guid id, Guid employerId, int branchId, string fileName, IFormFile file,
             Experience experience, EmploymentType employment, Schedule scheduleWork)
         {
             Id = id;
             EmployerId = employerId;
+            BranchId = branchId;
+            FileName = fileName;
             File = file;
             Experience = experience;
             Employment = employment;
@@ -22,14 +24,20 @@ namespace MyResume.Domain.Models
 
         public Guid Id { get; }
         public Guid EmployerId {  get; }
+        public int BranchId { get; set; }
+
         public Experience Experience { get; }
         public EmploymentType Employment { get; }
         public Schedule ScheduleWork { get; }
+
+        public string FileName { get; set; }
         public IFormFile File { get; }
 
         public static Result<Vacancy> Create(
             Guid id,
             Guid employerId,
+            int branchId,
+            string fileName,
             IFormFile file,
             Experience experience,
             EmploymentType employment,
@@ -43,7 +51,7 @@ namespace MyResume.Domain.Models
             if (!ALLOWED_EXTENSIONS.Contains(extension))
                 return Result.Failure<Vacancy>("Invalid file type");
 
-            var vacancy = new Vacancy(id, employerId,file, experience,employment,scheduleWork);
+            var vacancy = new Vacancy(id, employerId, branchId, fileName, file, experience,employment,scheduleWork);
 
             return Result.Success(vacancy);
         }

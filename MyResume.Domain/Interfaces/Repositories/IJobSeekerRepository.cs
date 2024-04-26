@@ -1,6 +1,5 @@
 ﻿using MyResume.Domain.Dtos;
 using MyResume.Domain.Models;
-using MyResume.Domain.ValueObjects;
 
 namespace MyResume.Domain.Interfaces.Repositories
 {
@@ -12,11 +11,11 @@ namespace MyResume.Domain.Interfaces.Repositories
         Task<JobSeeker> GetByIdRawJobSeeker(Guid id);
         Task<InfoOnCardJobSeekerDto> GetInfoOnCard(Guid jobSeekerId);
         Task UpdateInfo(Guid id,
-                                       string fullName,
-                                       string? description,
-                                       string? phoneNumber,
-                                       Guid? avatarId,
-                                       int? cityId,
-                                       int? branchId);
+                        string fullName,
+                        string? description,
+                        string? phoneNumber,
+                        Guid? avatarId,
+                        int? cityId,
+                        int? branchId);
     }
 }
