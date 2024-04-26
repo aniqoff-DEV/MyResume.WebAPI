@@ -5,12 +5,12 @@ namespace MyResume.Domain.Interfaces.Services
 {
     public interface IDocumentService
     {
-        Task<Resume> GetByJobSeekerId(Guid jobSeekerId);
+        Task<Resume> GetByResumeId(Guid resumeId);
         Task<Guid> CreateResume(Resume resume);
-        Task DeleteResume(Guid jobSeekerId);
-        Task UpdateResume(Guid jobSeekerId, IFormFile file);
+        Task DeleteResume(Guid resumeId);
+        Task UpdateResume(Guid resumeId, IFormFile file);
 
-        Task<Vacancy> GetByEmployerId(Guid employerId);
+        Task<Vacancy> GetByVcancyId(Guid employerId);
         Task<Guid> CreateVacancy(Vacancy vacancy);
         Task DeleteVacancy(Guid employerId);
         Task UpdateVacancy(Guid employerId, IFormFile file);

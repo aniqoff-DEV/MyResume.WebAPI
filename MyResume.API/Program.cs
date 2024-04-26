@@ -13,6 +13,9 @@ namespace MyResume.API
             // Add services to the container.
 
             builder.Services.AddControllers();
+            
+            builder.Services.AddMediatR(cfg =>
+                cfg.RegisterServicesFromAssemblies(typeof(Application.AssemblyReference).Assembly));
 
             builder.Services.AddScoped<ILocationService, LocationService>();
             builder.Services.AddScoped<ICountryRepository, CountryRepository>();
@@ -23,6 +26,11 @@ namespace MyResume.API
 
             builder.Services.AddScoped<IImageRepository, ImageRepository>();
             builder.Services.AddScoped<IImageService, ImageService>();
+            builder.Services.AddScoped<IResumeRepository,ResumeRepository>();
+            builder.Services.AddScoped<IDocumentService, DocumentService>();
+
+            builder.Services.AddScoped<IJobSeekerRepository, JobSeekerRepository>();
+            builder.Services.AddScoped<IJobSeekerService, JobSeekerService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

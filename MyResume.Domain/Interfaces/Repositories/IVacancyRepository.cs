@@ -3,7 +3,7 @@ using MyResume.Domain.Models;
 
 namespace MyResume.Domain.Interfaces.Repositories
 {
-    public interface IDocumentService
+    public interface IVacancyService
     {       
         Task<Vacancy> GetByEmployerId(Guid employerId);
         Task CreateVacancy(Vacancy vacancy);

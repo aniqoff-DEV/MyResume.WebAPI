@@ -13,8 +13,9 @@ namespace MyResume.Infrasctructure.Entities
         public float Reputation { get; set; } 
         public int CountFeedBack { get; set; } 
 
-        public Guid AvatarId { get; set; }
-        public int CityId { get; set; }
-        public int BranchId { get; set; }
+        public Guid? AvatarId { get; set; }
+        public Guid? ResumeId { get; set; }
+        public int? CityId { get; set; }
+        public int? BranchId { get; set; }
     }
 }

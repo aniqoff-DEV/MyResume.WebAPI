@@ -7,8 +7,8 @@ namespace MyResume.Domain.ValueObjects
     {
         private const string emailRegex = @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z";
 
-        public string EmailValue { get; }
-        private Email(string email) => EmailValue = email;
+        public string Value { get; }
+        private Email(string email) => Value = email;
 
         public static Result<Email> Create(string input)
         {
@@ -22,7 +22,7 @@ namespace MyResume.Domain.ValueObjects
 
         protected override IEnumerable<IComparable> GetEqualityComponents()
         {
-            yield return EmailValue;
+            yield return Value;
         }
     }
 }

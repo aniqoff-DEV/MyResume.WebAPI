@@ -6,14 +6,17 @@ namespace MyResume.Domain.ValueObjects
     public class PhoneNumber : ValueObject
     {
         private const string phoneRegex = @"^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[d\- ]{7,10}$";
-        public string Number { get; }
+        public string? Number { get; }
 
-        private PhoneNumber(string number) => Number = number;
+        private PhoneNumber(string? number) => Number = number;
 
-        public static Result<PhoneNumber> Create(string input)
+        public static Result<PhoneNumber> Create(string? input)
         {
-            if (string.IsNullOrWhiteSpace(input) || Regex.IsMatch(input, phoneRegex) == false)
-                return Result.Failure<PhoneNumber>("inputted wrong format!");
+            if(input is not null)
+            {
+                if (string.IsNullOrWhiteSpace(input) || Regex.IsMatch(input, phoneRegex) == false)
+                    return Result.Failure<PhoneNumber>("inputted wrong format!");
+            }           
 
             return new PhoneNumber(input);
         }

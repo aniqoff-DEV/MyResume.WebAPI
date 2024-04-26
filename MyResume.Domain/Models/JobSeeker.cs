@@ -12,8 +12,8 @@ namespace MyResume.Domain.Models
         private const string nameRegex = @"^[^<>.!@#%/]+$";
         private const string nameRegexWithoutNumbers = @"[0-9]";
 
-        private JobSeeker(Guid id, string fullName, string description, Email email, float reputation,
-            Password password, PhoneNumber? phoneNumber, Guid avatarId, int cityId, int branchId)
+        private JobSeeker(Guid id, string fullName, string description, Email email,
+            Password password, PhoneNumber? phoneNumber, Guid? avatarId, Guid? resumeId, int? cityId, int? branchId)
         {
             Id = id;
             FullName = fullName;
@@ -21,8 +21,8 @@ namespace MyResume.Domain.Models
             Email = email;
             Password = password;
             PhoneNumber = phoneNumber;
-            Reputation = reputation;
             AvatarId = avatarId;
+            ResumeId = resumeId;
             CityId = cityId;
             BranchId = branchId;
         }
@@ -36,9 +36,10 @@ namespace MyResume.Domain.Models
         public float Reputation { get; private set; } = 0;
         public int CountFeedBack { get; private set; } = 0;
 
-        public Guid AvatarId { get; }
-        public int CityId { get; }
-        public int BranchId { get; } // должность
+        public Guid? AvatarId { get; }
+        public Guid? ResumeId { get; }
+        public int? CityId { get; }
+        public int? BranchId { get; } 
 
         public void UpdateReputation(int star) 
         {
@@ -53,10 +54,10 @@ namespace MyResume.Domain.Models
             Email email,
             Password password,
             PhoneNumber? phoneNumber,
-            float reputation,
-            Guid avatarId,
-            int cityId, 
-            int branchId)
+            Guid? avatarId,
+            Guid? resumeId,
+            int? cityId, 
+            int? branchId)
         {
             if (fullName.Length > MAX_LENGHT_FULLNAME)
                 return Result.Failure<JobSeeker>("Too many characters of name!");
@@ -67,7 +68,7 @@ namespace MyResume.Domain.Models
             if (description.Length > MAX_LENGHT_DESCRIPTION)
                 return Result.Failure<JobSeeker>("Too many characters of description!");
 
-            var employer = new JobSeeker(id,fullName,description,email, reputation, password, phoneNumber,  avatarId, cityId,branchId);
+            var employer = new JobSeeker(id,fullName,description,email,  password, phoneNumber,  avatarId, resumeId, cityId, branchId);
 
             return Result.Success(employer);
         }

@@ -5,9 +5,9 @@ namespace MyResume.Domain.Interfaces.Repositories
 {
     public interface IResumeRepository
     {
-        Task<Resume> GetByJobSeekerId(Guid jobSeekerId);
-        Task CreateResume(Resume resume);
-        Task DeleteResume(Guid jobSeekerId);
-        Task UpdateResume(Guid jobSeekerId, IFormFile file);
+        Task<Resume> GetByResumeId(Guid resumeId);
+        Task<Guid> CreateResume(Resume resume);
+        Task DeleteResume(Guid resumeId);
+        Task UpdateResume(Guid resumeId, IFormFile file);
     }
 }
