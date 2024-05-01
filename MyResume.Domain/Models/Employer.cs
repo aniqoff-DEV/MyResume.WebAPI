@@ -10,13 +10,12 @@ namespace MyResume.Domain.Models
         public const int MAX_LENGHT_DESCRIPTION = 380;
         private const string companyNameRegex = @"^[0-9]{1,2}";
 
-        private Employer(Guid id, string companyName, Email email, Password password, Guid avatarId,
-            string description, string address, PhoneNumber? phoneNumber, int cityId)
+        private Employer(Guid id, string companyName, Email email, Password password, Guid? avatarId,
+            string description, PhoneNumber? phoneNumber, int cityId)
         {
             Id = id;
             CompanyName = companyName;
             Description = description;
-            Address = address;
             PhoneNumber = phoneNumber;
             CityId = cityId;
             Email = email;
@@ -48,9 +47,8 @@ namespace MyResume.Domain.Models
             string companyName, 
             Email email,
             Password password,
-            Guid avatarId,
+            Guid? avatarId,
             string description,
-            string address,
             PhoneNumber? phoneNumber,
             int cityId)
         {
@@ -70,7 +68,7 @@ namespace MyResume.Domain.Models
                 return Result.Failure<Employer>($"length {nameof(description)} cannot be more than 380 characters");
             }
 
-            var employer = new Employer(id,companyName,email, password, avatarId, description,address, phoneNumber, cityId);
+            var employer = new Employer(id,companyName,email, password, avatarId, description,phoneNumber, cityId);
             
             return Result.Success(employer);
         }

@@ -1,15 +1,11 @@
-﻿using MyResume.Domain.Models;
-using MyResume.Domain.ValueObjects;
+﻿using MyResume.Domain.Dtos;
+using MyResume.Domain.Models;
 
 namespace MyResume.Domain.Interfaces.Services
 {
     public interface IEmployerService
     {
-        Task CreateEmployer(Employer employer);
-        Task DeleteEmployer(Guid id);
-        Task<List<Employer>> GetEmployers();
-        Task<Employer> GetEmployerById(Guid id);
-        Task UpdatePersonalDataOnEmployer(Guid id, string companyName, Email email, Password password, Guid avatarId,
-            string description, string address, PhoneNumber? phoneNumber, int cityId);
+        Task<Guid> Create(Employer employer);
+        Task<EmployerDto> GetEmployerById(Guid employerId);
     }
 }

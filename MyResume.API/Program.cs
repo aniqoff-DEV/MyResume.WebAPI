@@ -43,6 +43,8 @@ namespace MyResume.API
 
             builder.Services.AddScoped<IJobSeekerRepository, JobSeekerRepository>();
             builder.Services.AddScoped<IJobSeekerService, JobSeekerService>();
+            builder.Services.AddScoped<IEmployerRepository, EmployerRepository>();
+            builder.Services.AddScoped<IEmployerService, EmployerService>();
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
