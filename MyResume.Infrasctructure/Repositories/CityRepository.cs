@@ -32,9 +32,18 @@ namespace MyResume.Infrasctructure.Repositories
             return cityId.FirstOrDefault();
         }
 
-        public async Task<List<CityDto>> GetCities(int countryId)
+        public async Task<List<CityDto>> GetCityDtos(int countryId)
         {
             var cities = await connection.QueryAsync<CityDto>($"SELECT ci.id, ct.name CountryName, ci.name " +
+                $"FROM {nameof(City)} ci " +
+                $"INNER JOIN {nameof(Country)} ct ON ct.id = ci.country_id WHERE ct.id = {countryId};");
+
+            return cities.ToList();
+        }
+
+        public async Task<List<City>> GetCities(int countryId)
+        {
+            var cities = await connection.QueryAsync<City>($"SELECT ci.id, ci.country_id CountryId, ci.name " +
                 $"FROM {nameof(City)} ci " +
                 $"INNER JOIN {nameof(Country)} ct ON ct.id = ci.country_id WHERE ct.id = {countryId};");
 

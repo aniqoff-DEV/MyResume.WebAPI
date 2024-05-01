@@ -14,6 +14,18 @@ namespace MyResume.API
 
             builder.Services.AddControllers();
             
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("CORSPolicy", builder =>
+                {
+                    builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                    .WithOrigins("https://localhost:7266", "http://localhost:5128");
+                });
+            });
+
             builder.Services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssemblies(typeof(Application.AssemblyReference).Assembly));
 
@@ -48,6 +60,7 @@ namespace MyResume.API
 
             app.UseAuthorization();
 
+            app.UseCors("CORSPolicy");
 
             app.MapControllers();
 

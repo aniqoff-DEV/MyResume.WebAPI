@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MyResume.API.Contracts.Requests;
+using MyResume.API.Contracts.Responses;
 using MyResume.Domain.Dtos;
 using MyResume.Domain.Interfaces.Services;
 using MyResume.Domain.Models;
@@ -40,6 +41,28 @@ namespace MyResume.API.Controllers
                 return NotFound();
 
             return Ok(jobSeekers);
+        }
+
+        [HttpGet("pageinfo/id={jobSeekerId}")]
+        public async Task<ActionResult<InfoOnPageJobSeekerDto>> GetInfoOnPageJobSeekerById(Guid jobSeekerId)
+        {
+            var jobSeeker = await _jobSeekerService.GetInfoOnPageJobSeekerById(jobSeekerId);
+
+            if (jobSeeker is null)
+                return NotFound();
+
+            return Ok(jobSeeker);
+        }
+
+        [HttpGet("fullinfo/id={jobSeekerId}")]
+        public async Task<ActionResult<JobSeekerDto>> GetJobSeekerById(Guid jobSeekerId)
+        {
+            var jobSeeker = await _jobSeekerService.GetJobSeekerById(jobSeekerId);
+
+            if (jobSeeker is null)
+                return NotFound();
+
+            return Ok(jobSeeker);
         }
 
         [HttpPost("create/fulldata")]

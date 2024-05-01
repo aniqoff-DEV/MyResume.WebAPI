@@ -5,7 +5,8 @@ namespace MyResume.Domain.Interfaces.Services
 {
     public interface ILocationService
     {
-        Task<List<CityDto>> GetCities(int countryId);
+        Task<List<CityDto>> GetCityDtos(int countryId);
+        Task<List<City>> GetCities(int countryId);
         Task<List<Country>> GetCountries();
         Task<Country> GetCountryById(int countryId);
         Task<CityDto> GetCityById(int cityId);

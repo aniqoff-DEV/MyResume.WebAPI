@@ -29,6 +29,7 @@ namespace MyResume.Domain.Models
         public Experience Experience { get; }
         public EmploymentType Employment { get; }
         public Schedule ScheduleWork { get; }
+        public int Salary { get; }
 
         public string FileName { get; set; }
         public IFormFile File { get; }

@@ -9,7 +9,9 @@
         public string Password { get; set; }
         public string? PhoneNumber { get; set; }
         public float Reputation { get; set; } 
-        public int CountFeedBack { get; set; } 
+        public int CountFeedBack { get; set; }
+        public int? DesiredSalary { get; set; }
+
 
         public Guid? AvatarId { get; set; }
         public Guid? ResumeId { get; set; }

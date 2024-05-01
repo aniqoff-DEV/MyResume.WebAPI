@@ -7,8 +7,8 @@ namespace MyResume.Domain.Interfaces.Repositories
     {
         Task<Guid> Create(JobSeeker jobSeeker);
         Task Delete(Guid id);
-        Task<List<JobSeeker>> GetRawJobSeekers();
-        Task<JobSeeker> GetByIdRawJobSeeker(Guid id);
+        Task<JobSeekerDto> GetByIdRawJobSeeker(Guid id);
+        Task<InfoOnPageJobSeekerDto> GetInfoOnPageJobSeekerById(Guid jobSeekerId);
         Task<InfoOnCardJobSeekerDto> GetInfoOnCardJobSeekerById(Guid jobSeekerId);
         Task<List<InfoOnCardJobSeekerDto>> GetInfoOnCardJobSeekerOnList();
 

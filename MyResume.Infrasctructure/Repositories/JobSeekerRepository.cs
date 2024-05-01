@@ -58,9 +58,10 @@ namespace MyResume.Infrasctructure.Repositories
 
         public async Task<InfoOnCardJobSeekerDto> GetInfoOnCardJobSeekerById(Guid jobSeekerId)
         {
-            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, b.name BranchName, c.name CityName " +
+            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, a.image_file Avatar, b.name BranchName, c.name CityName, js.desired_salary DesiredSalary " +
                 "FROM job_seeker js " +
                 "LEFT JOIN branch b ON b.id = js.branch_id " +
+                "LEFT JOIN avatar a ON a.id = js.avatar_id " +
                 "LEFT JOIN city c ON c.id = js.city_id " +
                 $"WHERE js.id = '{jobSeekerId}';";
 
@@ -70,29 +71,44 @@ namespace MyResume.Infrasctructure.Repositories
 
         public async Task<List<InfoOnCardJobSeekerDto>> GetInfoOnCardJobSeekerOnList()
         {
-            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, b.name BranchName, c.name CityName " +
+            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, a.image_file Avatar, b.name BranchName, c.name CityName, js.desired_salary DesiredSalary " +
                 "FROM job_seeker js " +
                 "LEFT JOIN branch b ON b.id = js.branch_id " +
+                "LEFT JOIN avatar a ON a.id = js.avatar_id " +
                 "LEFT JOIN city c ON c.id = js.city_id;";
 
             var jobSeeker = await connection.QueryAsync<InfoOnCardJobSeekerDto>(sql);
             return jobSeeker.ToList();
         }
 
-        public async Task<List<JobSeeker>> GetRawJobSeekers()
+        public async Task<InfoOnPageJobSeekerDto> GetInfoOnPageJobSeekerById(Guid jobSeekerId)
         {
-            var jobSeekers = await connection.QueryAsync<JobSeeker>($"SELECT * FROM {TABLE_NAME}");           
+            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, js.email Email, " +
+                "js.reputation Reputation, js.count_feedback CountFeedBack, a.image_file Avatar, r.file Resume, js.desired_salary DesiredSalary, " +
+                "b.name Branch, c.name City " +
+                $"FROM {TABLE_NAME} js " +
+                "LEFT JOIN branch b ON b.id = js.branch_id " +
+                "LEFT JOIN avatar a ON a.id = js.avatar_id " +
+                "LEFT JOIN city c ON c.id = js.city_id " +
+                "LEFT JOIN resume r ON r.id = js.resume_id " +
+                $"WHERE js.id = '{jobSeekerId}';";
 
-            return jobSeekers.ToList();
+            var jobSeekers = await connection.QuerySingleAsync<InfoOnPageJobSeekerDto>(sql);
+
+            return jobSeekers;
         }
 
-        public async Task<JobSeeker> GetByIdRawJobSeeker(Guid id)
+        public async Task<JobSeekerDto> GetByIdRawJobSeeker(Guid id)
         {
-            var jobSeeker = await connection.QuerySingleAsync<JobSeeker>($"SELECT * FROM {TABLE_NAME} WHERE id = '{id}';");
+            var jobSeeker = await connection.QuerySingleAsync<JobSeekerDto>(
+                $"SELECT id Id, full_Name FullName, description Description, email Email, password Password," +
+                $" phone_number PhoneNumber, count_feedback CountFeedBack, reputation Reputation, avatar_id AvatarId," +
+                $" city_id CityId, branch_id BranchId, resume_id ResumeId, desired_salary DesiredSalary" +
+                $" FROM {TABLE_NAME} WHERE id = '{id}';");
 
             return jobSeeker;
         }
-        // TODO: remove to CQRS include some methods such as UpdatePersonalData(email and password) and maybe UpdateResume
+        
         public async Task UpdateInfo(Guid id,
                                        string fullName,
                                        string? description,

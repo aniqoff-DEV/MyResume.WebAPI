@@ -34,7 +34,13 @@ namespace MyResume.Application.Services
             return;
         }
 
-        public async Task<List<CityDto>> GetCities(int countryId)
+        public async Task<List<CityDto>> GetCityDtos(int countryId)
+        {
+            var cities = await _cityRepository.GetCityDtos(countryId);
+            return cities;
+        }
+
+        public async Task<List<City>> GetCities(int countryId)
         {
             var cities = await _cityRepository.GetCities(countryId);
             return cities;

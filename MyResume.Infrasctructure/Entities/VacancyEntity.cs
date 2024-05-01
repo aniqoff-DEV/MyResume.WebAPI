@@ -9,6 +9,7 @@
         public required string Experience { get; set; }
         public required string Employment {  get; set; }
         public required string ScheduleWork { get; set; }
+        public required int Salary { get; set; }
         public required string FileName { get; set; }
         public required byte[] File { get; set; }
     }

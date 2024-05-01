@@ -42,15 +42,15 @@ namespace MyResume.Application.Services
             return jobSeekers;
         }
 
-        public async Task<JobSeeker> GetJobSeekerById(Guid id)
+        public async Task<JobSeekerDto> GetJobSeekerById(Guid id)
         {
             var jobSeeker = await _repository.GetByIdRawJobSeeker(id);
             return jobSeeker;
         }
 
-        public async Task<List<JobSeeker>> GetJobSeekers()
+        public async Task<InfoOnPageJobSeekerDto> GetInfoOnPageJobSeekerById(Guid jobSeekerId)
         {
-            var jobSeekerList = await _repository.GetRawJobSeekers();
+            var jobSeekerList = await _repository.GetInfoOnPageJobSeekerById(jobSeekerId);
             return jobSeekerList;
         }
 

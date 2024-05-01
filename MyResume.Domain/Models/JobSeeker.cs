@@ -35,6 +35,7 @@ namespace MyResume.Domain.Models
         public PhoneNumber PhoneNumber { get; }
         public float Reputation { get; private set; } = 0;
         public int CountFeedBack { get; private set; } = 0;
+        public int? DesiredSalary { get; }
 
         public Guid? AvatarId { get; }
         public Guid? ResumeId { get; }

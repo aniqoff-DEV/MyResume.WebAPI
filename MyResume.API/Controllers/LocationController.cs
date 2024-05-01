@@ -21,8 +21,20 @@ namespace MyResume.API.Controllers
         }
 
         #region City
+        [HttpGet("citydto/all/bycountry/id={countryId}")]
+        public async Task<ActionResult<IEnumerable<CityDto>>> GetCityDtos(int countryId)
+        {
+            var cities = await _locationService
+                .GetCityDtos(countryId);
+
+            if (cities is null)
+                return BadRequest();
+
+            return Ok(cities);
+        }
+
         [HttpGet("city/all/bycountry/id={countryId}")]
-        public async Task<ActionResult<IEnumerable<CityDto>>> GetCities(int countryId)
+        public async Task<ActionResult<IEnumerable<City>>> GetCities(int countryId)
         {
             var cities = await _locationService
                 .GetCities(countryId);
