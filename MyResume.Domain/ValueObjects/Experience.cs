@@ -32,7 +32,7 @@ namespace MyResume.Domain.ValueObjects
 
             var experience = input.ToLower();
 
-            if (_all.Any(e => e.Value.ToLower() == input) == false)
+            if (_all.Any(e => e.Value.ToLower() == experience) == false)
                 return Result.Failure<Experience>("The value is not valid");
 
             return new Experience(experience);

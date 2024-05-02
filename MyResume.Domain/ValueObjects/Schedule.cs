@@ -30,12 +30,12 @@ namespace MyResume.Domain.ValueObjects
             if (string.IsNullOrWhiteSpace(input))
                 return Result.Failure<Schedule>("The line must not be empty");
 
-            var experience = input.ToLower();
+            var schedule = input.ToLower();
 
-            if (_all.Any(e => e.Value.ToLower() == input) == false)
+            if (_all.Any(e => e.Value.ToLower() == schedule) == false)
                 return Result.Failure<Schedule>("The value is not valid");
 
-            return new Schedule(experience);
+            return new Schedule(schedule);
         }
 
         protected override IEnumerable<IComparable> GetEqualityComponents()

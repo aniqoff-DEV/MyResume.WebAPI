@@ -32,12 +32,12 @@ namespace MyResume.Domain.ValueObjects
             if (string.IsNullOrWhiteSpace(input))
                 return Result.Failure<EmploymentType>("The line must not be empty");
 
-            var experience = input.ToLower();
+            var employment = input.ToLower();
 
-            if (_all.Any(e => e.Value.ToLower() == input) == false)
+            if (_all.Any(e => e.Value.ToLower() == employment) == false)
                 return Result.Failure<EmploymentType>("The value is not valid");
 
-            return new EmploymentType(experience);
+            return new EmploymentType(employment);
         }
 
         protected override IEnumerable<IComparable> GetEqualityComponents()
