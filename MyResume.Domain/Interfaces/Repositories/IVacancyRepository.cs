@@ -7,6 +7,7 @@ namespace MyResume.Domain.Interfaces.Repositories
     {
         Task<List<InfoOnCardVacancyDto>> GetInfoOnCardList();
         Task<InfoOnPageVacancyDto> GetInfoOnPage(Guid vacancyId);
+        Task<List<InfoOnCardVacancyDto>> GetInfoOnCardListByEmployerId(Guid employerId);
         Task<Guid> Create(Vacancy vacancy);
         Task Delete(Guid vacancyId);
         Task Update(

@@ -62,6 +62,19 @@ namespace MyResume.Infrasctructure.Repositories
             return vacancyEntity.ToList();
         }
 
+        public async Task<List<InfoOnCardVacancyDto>> GetInfoOnCardListByEmployerId(Guid employerId)
+        {
+            var vacancyEntity = await connection.QueryAsync<InfoOnCardVacancyDto>($"SELECT v.id Id, e.company_name CompanyName, e.description Description, b.name BranchName, " +
+                $"e.address Address, v.experience Experience, v.employment_type Employment, v.schedule_work ScheduleWork, v.salary Salary, a.image_file Avatar " +
+                $"FROM {nameof(Vacancy)} v " +
+                $"LEFT JOIN branch b ON b.id = v.branch_id " +
+                $"INNER JOIN employer e ON e.id = v.employer_id " +
+                $"LEFT JOIN avatar a ON a.id = e.avatar_id " +
+                $"WHERE e.id = '{employerId}';");
+
+            return vacancyEntity.ToList();
+        }
+
         public async Task<InfoOnPageVacancyDto> GetInfoOnPage(Guid vacancyId)
         {
             var vacancyEntity = await connection.QuerySingleAsync<InfoOnPageVacancyDto>($"SELECT v.id Id, e.id EmployerId, e.company_name CompanyName, e.description Description, b.name BranchName, " +

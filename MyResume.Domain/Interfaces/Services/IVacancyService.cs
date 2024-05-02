@@ -9,5 +9,6 @@ namespace MyResume.Domain.Interfaces.Services
         Task Delete(Guid vacancyId);
         Task<List<InfoOnCardVacancyDto>> GetInfoOnCardList();
         Task<InfoOnPageVacancyDto> GetInfoOnPage(Guid vacancyId);
+        Task<List<InfoOnCardVacancyDto>> GetInfoOnCardListByEmployerId(Guid employerId);
     }
 }

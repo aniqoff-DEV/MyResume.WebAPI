@@ -50,7 +50,7 @@ namespace MyResume.Infrasctructure.Repositories
         public async Task<EmployerDto> GetCompanyCardById(Guid employerId)
         {
             string sql = $"SELECT e.id Id, e.company_name CompanyName, e.description Description, " +
-                $"e.address Address,  e.reputation Reputation, " +
+                $"e.address Address,  e.reputation Reputation, e.email Email, " +
                 $"e.count_feedback CountFeedBack, a.image_file Avatar " +
                 $"FROM {nameof(Employer)} e " +
                 $"LEFT JOIN {nameof(Avatar)} a ON a.id = e.avatar_id " +
@@ -63,7 +63,7 @@ namespace MyResume.Infrasctructure.Repositories
         public async Task<List<EmployerDto>> GetCompanyCards()
         {
             string sql = $"SELECT e.id Id, e.company_name CompanyName, e.description Description, " +
-                $"e.address Address,  e.reputation Reputation, " +
+                $"e.address Address, e.reputation Reputation, e.email Email, " +
                 $"e.count_feedback CountFeedBack, a.image_file Avatar " +
                 $"FROM {nameof(Employer)} e " +
                 $"LEFT JOIN {nameof(Avatar)} a ON a.id = e.avatar_id;";

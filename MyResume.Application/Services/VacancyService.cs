@@ -36,6 +36,12 @@ namespace MyResume.Application.Services
             return vacancy;
         }
 
+        public async Task<List<InfoOnCardVacancyDto>> GetInfoOnCardListByEmployerId(Guid employerId)
+        {
+            var vacancy = await _mediator.Send(new GetInfoOnCardVacancyOnListByEmployerIdQuery(employerId));
+            return vacancy;
+        }
+
         public async Task<InfoOnPageVacancyDto> GetInfoOnPage(Guid vacancyId)
         {
             var vacancy = await _mediator.Send(new GetInfoOnPageVacancyByIdQuery(vacancyId));

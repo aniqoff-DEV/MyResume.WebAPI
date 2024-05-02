@@ -72,5 +72,16 @@ namespace MyResume.API.Controllers
 
             return Ok(vacancy);
         }
+
+        [HttpGet("all/card/employerId={employerId}")]
+        public async Task<ActionResult<List<InfoOnCardVacancyDto>>> GetVacancyOnCard(Guid employerId)
+        {
+            var vacancy = await _vacancyService.GetInfoOnCardListByEmployerId(employerId);
+
+            if (vacancy.IsNullOrEmpty())
+                return NotFound();
+
+            return Ok(vacancy);
+        }
     }
 }
