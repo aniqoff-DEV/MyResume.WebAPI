@@ -62,6 +62,20 @@ namespace MyResume.Infrasctructure.Repositories
             return vacancyEntity.ToList();
         }
 
+        public async Task<InfoOnPageVacancyDto> GetInfoOnPage(Guid vacancyId)
+        {
+            var vacancyEntity = await connection.QuerySingleAsync<InfoOnPageVacancyDto>($"SELECT v.id Id, e.id EmployerId, e.company_name CompanyName, e.description Description, b.name BranchName, " +
+                $"e.address Address, e.email Email, e.phone_number PhoneNumber, v.experience Experience, v.employment_type Employment, " +
+                $"v.schedule_work ScheduleWork, v.salary Salary, a.image_file Avatar, v.file File " +
+                $"FROM {nameof(Vacancy)} v " +
+                $"LEFT JOIN branch b ON b.id = v.branch_id " +
+                $"LEFT JOIN employer e ON e.id = v.employer_id " +
+                $"LEFT JOIN avatar a ON a.id = e.avatar_id " +
+                $"WHERE v.id = '{vacancyId}';");
+
+            return vacancyEntity;
+        }
+
         public Task Update(Guid vacancyId, int BranchId, string experience, string employment, string scheduleWork, int salary, string fileName, byte[] file)
         {
             throw new NotImplementedException();

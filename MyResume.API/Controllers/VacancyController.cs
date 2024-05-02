@@ -61,5 +61,16 @@ namespace MyResume.API.Controllers
 
             return Ok(vacancy);
         }
+
+        [HttpGet("page/id={vacancyId}")]
+        public async Task<ActionResult<InfoOnPageVacancyDto>> GetVacancyOnPage(Guid vacancyId)
+        {
+            var vacancy = await _vacancyService.GetInfoOnPage(vacancyId);
+
+            if (vacancy is null)
+                return NotFound();
+
+            return Ok(vacancy);
+        }
     }
 }
