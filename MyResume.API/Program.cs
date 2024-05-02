@@ -39,7 +39,9 @@ namespace MyResume.API
             builder.Services.AddScoped<IImageRepository, ImageRepository>();
             builder.Services.AddScoped<IImageService, ImageService>();
             builder.Services.AddScoped<IResumeRepository,ResumeRepository>();
+            builder.Services.AddScoped<IVacancyRepository, VacancyRepository>();
             builder.Services.AddScoped<IDocumentService, DocumentService>();
+            builder.Services.AddScoped<IVacancyService,  VacancyService>();
 
             builder.Services.AddScoped<IJobSeekerRepository, JobSeekerRepository>();
             builder.Services.AddScoped<IJobSeekerService, JobSeekerService>();
