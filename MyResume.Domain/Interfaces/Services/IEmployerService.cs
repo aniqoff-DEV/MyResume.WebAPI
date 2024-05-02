@@ -6,6 +6,7 @@ namespace MyResume.Domain.Interfaces.Services
     public interface IEmployerService
     {
         Task<Guid> Create(Employer employer);
-        Task<EmployerDto> GetEmployerById(Guid employerId);
+        Task<EmployerDto> GetCompanyCardById(Guid employerId);
+        Task<List<EmployerDto>> GetCompanyCards();
     }
 }

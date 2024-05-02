@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using MyResume.API.Contracts.Requests;
 using MyResume.Application.Services;
 using MyResume.Domain.Dtos;
@@ -17,15 +18,26 @@ namespace MyResume.API.Controllers
 
         public EmployerController(IEmployerService employerService) => _employerService = employerService;
 
-        [HttpGet("id={employerId}")]
-        public async Task<ActionResult<EmployerDto>> GetEmployer(Guid employerId)
+        [HttpGet("company/id={employerId}")]
+        public async Task<ActionResult<EmployerDto>> GetCompanyCard(Guid employerId)
         {
-            var employer = await _employerService.GetEmployerById(employerId);
+            var companyCard = await _employerService.GetCompanyCardById(employerId);
 
-            if (employer is null)
+            if (companyCard is null)
                 return NotFound();
 
-            return Ok(employer);
+            return Ok(companyCard);
+        }
+
+        [HttpGet("company")]
+        public async Task<ActionResult<EmployerDto>> GetCompanyCards()
+        {
+            var companyCards = await _employerService.GetCompanyCards();
+
+            if (companyCards.IsNullOrEmpty())
+                return NotFound();
+
+            return Ok(companyCards);
         }
 
         [HttpPost]

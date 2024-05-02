@@ -17,10 +17,16 @@ namespace MyResume.Application.Services
             return employerId;
         }
 
-        public async Task<EmployerDto> GetEmployerById(Guid employerId)
+        public async Task<EmployerDto> GetCompanyCardById(Guid employerId)
         {
-            var employer = await _repository.GetEmployerById(employerId);
-            return employer;
+            var companyCard = await _repository.GetCompanyCardById(employerId);
+            return companyCard;
+        }
+
+        public async Task<List<EmployerDto>> GetCompanyCards()
+        {
+            var companyCards = await _repository.GetCompanyCards();
+            return companyCards;
         }
     }
 }

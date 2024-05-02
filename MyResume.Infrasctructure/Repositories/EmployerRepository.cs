@@ -47,16 +47,29 @@ namespace MyResume.Infrasctructure.Repositories
             return newJobSeekerId;
         }
 
-        public async Task<EmployerDto> GetEmployerById(Guid employerId)
+        public async Task<EmployerDto> GetCompanyCardById(Guid employerId)
         {
-            string sql = $"SELECT id Id, company_name CompanyName, description Description, email Email, " +
-                $"password Password, address Address, phone_number PhoneNumber, reputation Reputation, " +
-                $"count_feedback CountFeedBack, avatar_id AvatarId, city_id CityId " +
-                $"FROM {nameof(Employer)} " +
-                $"WHERE id = '{employerId}';";
+            string sql = $"SELECT e.id Id, e.company_name CompanyName, e.description Description, " +
+                $"e.address Address,  e.reputation Reputation, " +
+                $"e.count_feedback CountFeedBack, a.image_file Avatar " +
+                $"FROM {nameof(Employer)} e " +
+                $"LEFT JOIN {nameof(Avatar)} a ON a.id = e.avatar_id " +
+                $"WHERE e.id = '{employerId}';";
 
-            var jobSeeker = await connection.QuerySingleAsync<EmployerDto>(sql);
-            return jobSeeker;
+            var companyCard = await connection.QuerySingleAsync<EmployerDto>(sql);
+            return companyCard;
+        }
+
+        public async Task<List<EmployerDto>> GetCompanyCards()
+        {
+            string sql = $"SELECT e.id Id, e.company_name CompanyName, e.description Description, " +
+                $"e.address Address,  e.reputation Reputation, " +
+                $"e.count_feedback CountFeedBack, a.image_file Avatar " +
+                $"FROM {nameof(Employer)} e " +
+                $"LEFT JOIN {nameof(Avatar)} a ON a.id = e.avatar_id;";
+
+            var companyCards = await connection.QueryAsync<EmployerDto>(sql);
+            return companyCards.ToList();
         }
     }
 }
