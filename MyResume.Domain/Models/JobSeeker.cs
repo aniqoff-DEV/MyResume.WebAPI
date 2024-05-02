@@ -13,7 +13,7 @@ namespace MyResume.Domain.Models
         private const string nameRegexWithoutNumbers = @"[0-9]";
 
         private JobSeeker(Guid id, string fullName, string description, Email email,
-            Password password, PhoneNumber? phoneNumber, Guid? avatarId, Guid? resumeId, int? cityId, int? branchId)
+            Password password, PhoneNumber? phoneNumber, Guid? avatarId, Guid? resumeId, int? cityId, int? branchId, int? desiredSalary)
         {
             Id = id;
             FullName = fullName;
@@ -25,6 +25,7 @@ namespace MyResume.Domain.Models
             ResumeId = resumeId;
             CityId = cityId;
             BranchId = branchId;
+            DesiredSalary = desiredSalary;
         }
 
         public Guid Id { get; }
@@ -58,7 +59,8 @@ namespace MyResume.Domain.Models
             Guid? avatarId,
             Guid? resumeId,
             int? cityId, 
-            int? branchId)
+            int? branchId,
+            int? desiredSalary)
         {
             if (fullName.Length > MAX_LENGHT_FULLNAME)
                 return Result.Failure<JobSeeker>("Too many characters of name!");
@@ -71,7 +73,7 @@ namespace MyResume.Domain.Models
             if (description.Length > MAX_LENGHT_DESCRIPTION)
                 return Result.Failure<JobSeeker>("Too many characters of description!");
 
-            var employer = new JobSeeker(id,fullName,description,email,  password, phoneNumber,  avatarId, resumeId, cityId, branchId);
+            var employer = new JobSeeker(id,fullName,description,email,  password, phoneNumber,  avatarId, resumeId, cityId, branchId, desiredSalary);
 
             return Result.Success(employer);
         }

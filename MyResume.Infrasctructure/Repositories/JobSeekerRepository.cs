@@ -31,13 +31,14 @@ namespace MyResume.Infrasctructure.Repositories
                 AvatarId = jobSeeker.AvatarId,
                 BranchId = jobSeeker.BranchId,
                 CityId =  jobSeeker.CityId,
-                ResumeId = jobSeeker.ResumeId
+                ResumeId = jobSeeker.ResumeId,
+                DesiredSalary = jobSeeker.DesiredSalary,
             };
 
             string sql = $"INSERT INTO {TABLE_NAME}" +
-                $" (id, full_name, description, email, password, phone_number," +
+                $" (id, full_name, description, email, password, phone_number, desired_salary, " +
                 $" count_feedback, reputation, avatar_id, city_id, branch_id, resume_id)" +
-                $" VALUES (@Id, @FullName, @Description, @Email, @Password, @PhoneNumber," +
+                $" VALUES (@Id, @FullName, @Description, @Email, @Password, @PhoneNumber, @DesiredSalary" +
                 $" @CountFeedBack, @Reputation, @AvatarId, @CityId, @BranchId, @ResumeId)" +
                 $" RETURNING id;";
 
@@ -58,7 +59,8 @@ namespace MyResume.Infrasctructure.Repositories
 
         public async Task<InfoOnCardJobSeekerDto> GetInfoOnCardJobSeekerById(Guid jobSeekerId)
         {
-            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, a.image_file Avatar, b.name BranchName, c.name CityName, js.desired_salary DesiredSalary " +
+            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description," +
+                " a.image_file Avatar, b.name BranchName, c.name CityName, js.desired_salary DesiredSalary " +
                 "FROM job_seeker js " +
                 "LEFT JOIN branch b ON b.id = js.branch_id " +
                 "LEFT JOIN avatar a ON a.id = js.avatar_id " +
@@ -71,7 +73,8 @@ namespace MyResume.Infrasctructure.Repositories
 
         public async Task<List<InfoOnCardJobSeekerDto>> GetInfoOnCardJobSeekerOnList()
         {
-            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, a.image_file Avatar, b.name BranchName, c.name CityName, js.desired_salary DesiredSalary " +
+            string sql = "SELECT js.id Id, js.full_Name FullName, js.description Description, a.image_file Avatar," +
+                " b.name BranchName, c.name CityName, js.desired_salary DesiredSalary " +
                 "FROM job_seeker js " +
                 "LEFT JOIN branch b ON b.id = js.branch_id " +
                 "LEFT JOIN avatar a ON a.id = js.avatar_id " +
