@@ -94,7 +94,8 @@ namespace MyResume.API.Controllers
         request.AvatarId,
         request.ResumeId,
         request.CityId,
-        request.BranchId
+        request.BranchId,
+        request.desiredSalary
                 );
             #endregion
             Guid newJobSeekerId = await _jobSeekerService.CreateJobSeeker(newJobSeeker.Value);

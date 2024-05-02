@@ -11,6 +11,7 @@ namespace MyResume.API.Contracts.Requests
             Guid? AvatarId,
             Guid? ResumeId,
             int? CityId,
-            int? BranchId
+            int? BranchId,
+            int? desiredSalary
         );
 }
