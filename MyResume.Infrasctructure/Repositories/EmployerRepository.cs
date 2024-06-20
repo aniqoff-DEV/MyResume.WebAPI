@@ -17,7 +17,17 @@ namespace MyResume.Infrasctructure.Repositories
             connection.Open();
         }
 
-        public async Task<Guid> Create(Employer employer)
+        public async Task<EmployerDto> GetByEmail(string email)
+        {
+            var employer = await connection.QuerySingleAsync<EmployerDto>(
+                $"SELECT id Id, company_name CompanyName, description Description, email Email, password_hash PasswordHash," +
+                $" address Address, count_feedback CountFeedBack, reputation Reputation, avatar_id AvatarId" +
+                $" FROM {nameof(Employer)} WHERE email= '{email}';");
+
+            return employer;
+        }
+
+        public async Task<Guid> Create(Employer employer, string passwordHash)
         {
             var newEmployer = new EmployerEntity()
             {
@@ -25,7 +35,7 @@ namespace MyResume.Infrasctructure.Repositories
                 CompanyName = employer.CompanyName,
                 Description = employer.Description,
                 Email = employer.Email.Value,
-                Password = employer.Password.Value,
+                PasswordHash = passwordHash,
                 Address = employer.Address,
                 PhoneNumber = employer.PhoneNumber.Number,
                 Reputation = employer.Reputation,
@@ -35,16 +45,16 @@ namespace MyResume.Infrasctructure.Repositories
             };
 
             string sql = $"INSERT INTO {nameof(Employer)}" +
-                $" (id, company_name, description, email, password, phone_number," +
+                $" (id, company_name, description, email, password_hash, phone_number," +
                 $" count_feedback, reputation, avatar_id, city_id, address)" +
-                $" VALUES (@Id, @CompanyName, @Description, @Email, @Password, @PhoneNumber," +
+                $" VALUES (@Id, @CompanyName, @Description, @Email, @PasswordHash, @PhoneNumber," +
                 $" @CountFeedBack, @Reputation, @AvatarId, @CityId, ( SELECT ct.name || ' ' || ci.name " +
                 $"FROM city ci INNER JOIN country ct ON ct.id = ci.country_id WHERE ci.id = {employer.CityId} ))" +
                 $" RETURNING id;";
 
-            var newJobSeekerId = await connection.QuerySingleAsync<Guid>(sql, newEmployer);
+            var newEmployerId = await connection.QuerySingleAsync<Guid>(sql, newEmployer);
 
-            return newJobSeekerId;
+            return newEmployerId;
         }
 
         public async Task<EmployerDto> GetCompanyCardById(Guid employerId)

@@ -1,8 +1,6 @@
 ﻿using Dapper;
 using MyResume.Domain.Dtos;
 using MyResume.Domain.Interfaces.Repositories;
-using MyResume.Domain.Models;
-using MyResume.Infrasctructure.Entities;
 using Npgsql;
 
 namespace MyResume.Infrasctructure.Repositories
@@ -18,31 +16,16 @@ namespace MyResume.Infrasctructure.Repositories
             connection.Open();
         }
 
-        public async Task<Guid> Create(JobSeeker jobSeeker)
+        public async Task<Guid> Create(JobSeekerDto jobSeeker)
         {
-            var newJobSeeker = new JobSeekerEntity()
-            {
-                Id = jobSeeker.Id,
-                FullName = jobSeeker.FullName,
-                Description = jobSeeker.Description,
-                Email = jobSeeker.Email.Value,
-                Password = jobSeeker.Password.Value,
-                PhoneNumber = jobSeeker.PhoneNumber.Number,
-                AvatarId = jobSeeker.AvatarId,
-                BranchId = jobSeeker.BranchId,
-                CityId =  jobSeeker.CityId,
-                ResumeId = jobSeeker.ResumeId,
-                DesiredSalary = jobSeeker.DesiredSalary,
-            };
-
             string sql = $"INSERT INTO {TABLE_NAME}" +
-                $" (id, full_name, description, email, password, phone_number, desired_salary, " +
+                $" (id, full_name, description, email, password_hash, phone_number, desired_salary, " +
                 $" count_feedback, reputation, avatar_id, city_id, branch_id, resume_id)" +
-                $" VALUES (@Id, @FullName, @Description, @Email, @Password, @PhoneNumber, @DesiredSalary" +
+                $" VALUES (@Id, @FullName, @Description, @Email, @PasswordHash, @PhoneNumber, @DesiredSalary, " +
                 $" @CountFeedBack, @Reputation, @AvatarId, @CityId, @BranchId, @ResumeId)" +
                 $" RETURNING id;";
 
-            var newJobSeekerId = await connection.QuerySingleAsync<Guid>(sql, newJobSeeker);
+            var newJobSeekerId = await connection.QuerySingleAsync<Guid>(sql, jobSeeker);
 
             return newJobSeekerId;
         }
@@ -101,13 +84,13 @@ namespace MyResume.Infrasctructure.Repositories
             return jobSeekers;
         }
 
-        public async Task<JobSeekerDto> GetByIdRawJobSeeker(Guid id)
+        public async Task<JobSeekerDto> GetByEmail(string email)
         {
             var jobSeeker = await connection.QuerySingleAsync<JobSeekerDto>(
-                $"SELECT id Id, full_Name FullName, description Description, email Email, password Password," +
+                $"SELECT id Id, full_Name FullName, description Description, email Email, password_hash PasswordHash," +
                 $" phone_number PhoneNumber, count_feedback CountFeedBack, reputation Reputation, avatar_id AvatarId," +
                 $" city_id CityId, branch_id BranchId, resume_id ResumeId, desired_salary DesiredSalary" +
-                $" FROM {TABLE_NAME} WHERE id = '{id}';");
+                $" FROM {TABLE_NAME} WHERE email= '{email}';");
 
             return jobSeeker;
         }

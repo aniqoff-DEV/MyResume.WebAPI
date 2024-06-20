@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Extensions;
+﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using MyResume.API.Contracts.Requests;
 using MyResume.API.Contracts.Responses;
@@ -19,7 +18,7 @@ namespace MyResume.API.Controllers
         {
             _documentService = documentService;
         }
-
+                
         [HttpPost("resume/create")]
         public async Task<ActionResult<Guid>> CreateResume([FromForm] DocumentRequest request)
         {

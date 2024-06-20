@@ -3,26 +3,19 @@ using MyResume.Application.CQRS.JobSeeker.Queries;
 using MyResume.Domain.Dtos;
 using MyResume.Domain.Interfaces.Repositories;
 using MyResume.Domain.Interfaces.Services;
-using MyResume.Domain.Models;
 
 namespace MyResume.Application.Services
 {
     public class JobSeekerService : IJobSeekerService
     {
         private readonly IJobSeekerRepository _repository;
-        private readonly IMediator _mediator;
+        private readonly IMediator _mediator;        
 
         public JobSeekerService(IJobSeekerRepository repository, IMediator mediator)
         {
             _repository = repository;
-            _mediator = mediator;
-        }
-
-        public async Task<Guid> CreateJobSeeker(JobSeeker jobSeeker)
-        {
-            var newJobSeekerId = await _repository.Create(jobSeeker);
-            return newJobSeekerId;
-        }
+            _mediator = mediator;            
+        }        
 
         public async Task DeleteJobSeeker(Guid id)
         {
@@ -40,12 +33,6 @@ namespace MyResume.Application.Services
         {
             var jobSeekers = await _mediator.Send(new GetInfoOnCardJobSeekerOnListQuery());
             return jobSeekers;
-        }
-
-        public async Task<JobSeekerDto> GetJobSeekerById(Guid id)
-        {
-            var jobSeeker = await _repository.GetByIdRawJobSeeker(id);
-            return jobSeeker;
         }
 
         public async Task<InfoOnPageJobSeekerDto> GetInfoOnPageJobSeekerById(Guid jobSeekerId)

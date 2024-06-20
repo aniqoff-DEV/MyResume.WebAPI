@@ -1,7 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using MyResume.API.Hubs;
 using MyResume.Application.Services;
+using MyResume.Domain.Interfaces;
 using MyResume.Domain.Interfaces.Repositories;
 using MyResume.Domain.Interfaces.Services;
+using MyResume.Infrasctructure;
 using MyResume.Infrasctructure.Repositories;
+using System.Text;
 
 namespace MyResume.API
 {
@@ -13,7 +19,28 @@ namespace MyResume.API
             // Add services to the container.
 
             builder.Services.AddControllers();
+
+            #region JwtAuthentication
+            builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(nameof(JwtOptions)));
+            var jwtSection = builder.Configuration.GetSection(nameof(JwtOptions)).Get<JwtOptions>();
             
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSection.SecretKey!))
+                };
+            });
+            #endregion
+
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("CORSPolicy", builder =>
@@ -29,6 +56,7 @@ namespace MyResume.API
             builder.Services.AddMediatR(cfg =>
                 cfg.RegisterServicesFromAssemblies(typeof(Application.AssemblyReference).Assembly));
 
+            #region IoC
             builder.Services.AddScoped<ILocationService, LocationService>();
             builder.Services.AddScoped<ICountryRepository, CountryRepository>();
             builder.Services.AddScoped<ICityRepository, CityRepository>();
@@ -48,6 +76,11 @@ namespace MyResume.API
             builder.Services.AddScoped<IEmployerRepository, EmployerRepository>();
             builder.Services.AddScoped<IEmployerService, EmployerService>();
 
+            builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+            builder.Services.AddScoped<IJwtProvider, JwtProvider>();
+            builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
+            #endregion
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -62,11 +95,14 @@ namespace MyResume.API
 
             app.UseHttpsRedirection();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors("CORSPolicy");
-
+            
             app.MapControllers();
+            app.MapBlazorHub();
+            app.MapHub<ChatHub>("/chathub");
 
             app.Run();
         }
